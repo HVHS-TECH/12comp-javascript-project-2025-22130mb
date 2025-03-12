@@ -5,8 +5,8 @@
 
 // Variables 
 var timerValue = 10;
-var Ballnumber = 1;
-
+var Ballnumber = 5;
+var button;
 // Setup 
 function setup() {
     console.log("setup: ");
@@ -23,28 +23,39 @@ function setup() {
     wallRH.color = 'white';
     wallTop.color = 'white';
     wallBot.color = 'white';
+
+
     //creates walls
+
     BallGroup = new Group();
     for (let i = 0; i < Ballnumber; i++) {
-        let Ball = new Sprite(random(100, 900), random(100, 900), 50, 50, 'd');
+        let Ball = new Sprite(random(100, 900), random(100, 900), 50, 'k');
         BallGroup.add(Ball);
-        Ball.vel.x = random(2, 5);
-        Ball.vel.y = random(2, 5);
+        }
+        
+
         // code for "balls" making them appear randomly
 
     }
-}
+
 // Draw
 function draw() {
     background('black');
-
-    if (kb.pressing('w')) {
-        Ball.vel.y = 5;
-    } else if (kb.pressing('s')) {
-        Ball.vel.y = -5;
-    } else if (kb.pressing('a')) {
-        Ball.vel.x = 5;
-    } else if (kb.pressing('d')) {
-        Ball.vel.x = -5;
+    bat.moveTowards(mouseX, mouseY, 1);
+    if (mouse.presses('left') ) {
+        for (let s of BallGroup ) {
+            if (s.onMouseLeftClick !== undefined && s.mouse.hovering() ) {
+                alert();
+            }
+        }
     }
+    /*if (mouse.presses()) {
+        BallGroup.remove();*/
+       
+
+ }
+
+function update() {
+    alert();
+    
 }
