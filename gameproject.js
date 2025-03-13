@@ -6,7 +6,8 @@
 // Variables 
 var timerValue = 10;
 var Ballnumber = 5;
-var button;
+var Score = 0;
+var timer = 10;
 // Setup 
 function setup() {
     console.log("setup: ");
@@ -31,31 +32,45 @@ function setup() {
     for (let i = 0; i < Ballnumber; i++) {
         let Ball = new Sprite(random(100, 900), random(100, 900), 50, 'k');
         BallGroup.add(Ball);
-        }
-        
-
-        // code for "balls" making them appear randomly
-
     }
 
+
+    // code for "balls" making them appear randomly
+    BallGroup.collides(bat, func2Call);
+    function func2Call(BallGroup, bat) {
+        if (mouse.pressing > 1) 
+        BallGroup.remove();
+        Score++;
+        
+    }
+}
 // Draw
 function draw() {
+    /*console.log(mouse.pressing()
+    );*/
+
     background('black');
     bat.moveTowards(mouseX, mouseY, 1);
-    if (mouse.presses('left') ) {
-        for (let s of BallGroup ) {
-            if (s.onMouseLeftClick !== undefined && s.mouse.hovering() ) {
-                alert();
-            }
-        }
+    score();
+    displayTimer();
+
+}
+
+
+function displayTimer() {
+    textSize(25);
+    fill('red');
+    textAlign(CENTER, CENTER);
+    textSize(100);
+    text(timer, width / 2, height / 2);
+
+    if (frameCount % 60 == 0 && timer > 0) {
+        timer--;
     }
-    /*if (mouse.presses()) {
-        BallGroup.remove();*/
-       
+}
 
- }
-
-function update() {
-    alert();
-    
+function score() {
+    textSize(35);
+    text("Score:" + Score, 80, 50);
+    fill('red');
 }
