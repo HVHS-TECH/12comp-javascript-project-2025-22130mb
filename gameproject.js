@@ -1,13 +1,13 @@
 // Game Project
 // Written by Max Bergman
 
-
-
 // Variables 
 var timerValue = 10;
-var Ballnumber = 5;
+var Ballnumber = 1; // Only one ball will be on screen at a time
 var Score = 0;
 var timer = 10;
+var currentBall; // The current ball object
+
 // Setup 
 function setup() {
     console.log("setup: ");
@@ -25,38 +25,21 @@ function setup() {
     wallTop.color = 'white';
     wallBot.color = 'white';
 
+    // Create walls
 
-    //creates walls
-
-    BallGroup = new Group();
-    for (let i = 0; i < Ballnumber; i++) {
-        let Ball = new Sprite(random(100, 900), random(100, 900), 50, 'k');
-        BallGroup.add(Ball);
-    }
-
-
-    // code for "balls" making them appear randomly
-    BallGroup.collides(bat, func2Call);
-    function func2Call(BallGroup, bat) {
-        if (mouse.pressing > 1) 
-        BallGroup.remove();
-        Score++;
-        
-    }
+    // Create the first ball
+    createBall();
 }
+
 // Draw
 function draw() {
-    /*console.log(mouse.pressing()
-    );*/
-
     background('black');
     bat.moveTowards(mouseX, mouseY, 1);
     score();
     displayTimer();
-
 }
 
-
+// Function to handle timer
 function displayTimer() {
     textSize(25);
     fill('red');
@@ -67,10 +50,33 @@ function displayTimer() {
     if (frameCount % 60 == 0 && timer > 0) {
         timer--;
     }
+
+    if (timer <= 0) {
+        // Game ends when the timer hits 0
+        textSize(50);
+        text("Game Over!", width / 2, height / 2 + 100);
+        noLoop(); // got this idea from p5 play website
+    }
 }
 
+// Function to handle score display
 function score() {
     textSize(35);
-    text("Score:" + Score, 80, 50);
+    text("Score: " + Score, 80, 50);
     fill('red');
+}
+
+// Function to create a new ball
+function createBall() {
+    // Create a new ball at a random spot
+    currentBall = new Sprite(random(100, 900), random(100, 900), 50, 50, 'k');
+    currentBall.color = 'red'; // Color the ball red
+
+    // Set up collision thing for this ball
+    currentBall.collides(bat, function (ball, bat) {
+        // If bat touches the ball, add 1 to my score, remove current ball, and spawn a new one
+        ball.remove();
+        Score++;
+        createBall(); // Spawn a new ball after the current one is hit
+    });
 }
