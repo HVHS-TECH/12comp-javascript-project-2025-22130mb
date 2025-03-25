@@ -7,22 +7,25 @@ var Ballnumber = 1; // Only one ball will be on screen at a time
 var Score = 0;
 var timer = 10;
 var currentBall; // The current ball object
-var imgFace;
-var gamestate = Start;
+var imgFace, imgHammer;
+var startgame
 
 function preload() {
-    imgBG = loadImage('pixil-frame-0.png');
-    imgFace = loadImage('pixil-frame-0.png'); // Load the image for the ball
+    imgBG = loadImage('images/pixil-frame-0.png');
+    imgFace = loadImage('images/pixil-frame-0.png'); // Load the image for the ball
+    imgHammer = loadImage('images/hammer.png'); // Load the hammer image
 }
 
 function setup() {
     console.log("setup: ");
     createCanvas(1000, 1000);
 
-    imgFace.resize(150, 150); // Resize image so it fits properly
+    imgFace.resize(150, 150); // changes scale
 
+    // Create the bat (hammer)
     bat = new Sprite(400, 400, 10, 10, 'd');
-    bat.color = 'white';
+    bat.img = imgHammer; // links hammer image ro bat
+    bat.scale = 0.1; // chanfes scale
 
     // Create walls
     wallLH = new Sprite(0, 500, 15, 1000, 'k');
@@ -30,7 +33,8 @@ function setup() {
     wallTop = new Sprite(500, 0, 1000, 15, 'k');
     wallBot = new Sprite(500, 1000, 1000, 15, 'k');
 
-    wallLH.color = 'white';    wallRH.color = 'white';
+    wallLH.color = 'white';    
+    wallRH.color = 'white';
     wallTop.color = 'white';
     wallBot.color = 'white';
 
@@ -84,4 +88,16 @@ function createBall() {
         Score++;
         createBall();
     });
+    
+}
+
+function keyPressed() {
+    if (key == 'r' || key == 'R') {
+        startGame();
+    }
+}
+function startGame() {
+allsprites.visible = true;
+
+
 }
