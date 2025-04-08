@@ -9,7 +9,6 @@ var currentBall;
 var imgFace, imgHammer;
 var Background;
 var gameState = "start";
-var restartButton;
 
 function preload() {
     imgBG = loadImage('images/pixil-frame-0.png');
@@ -34,11 +33,6 @@ function setup() {
 
     wallLH.color = wallRH.color = wallTop.color = wallBot.color = 'white';
     wallLH.visible = wallRH.visible = wallTop.visible = wallBot.visible = false;
-
-    restartButton = createButton("Restart");
-    restartButton.position(width / 2 - 50, height / 2 + 75);
-    restartButton.mousePressed(restartGame);
-    restartButton.hide();
 }
 
 function draw() {
@@ -67,6 +61,24 @@ function mousePressed() {
     if (gameState === "start") {
         gameState = "playing";
         createBall();
+    }
+}
+
+// 🔄 Restart with "r" key support
+function keyPressed() {
+    checkKey(key);
+}
+
+function checkKey(_keyPressed) {
+    if (_keyPressed === " " || _keyPressed === "Enter") {
+        console.log("Game Started!");
+        if (gameState === "start") {
+            gameState = "playing";
+            createBall();
+        }
+    } else if (_keyPressed === 'r' || _keyPressed === 'R') {
+        console.log("Game Restarted!");
+        restartGame();
     }
 }
 
@@ -112,8 +124,7 @@ function showStartScreen() {
     textSize(50);
     fill('white');
     textAlign(CENTER, CENTER);
-    text("Click to Start", width / 2, height / 2);
-    restartButton.hide();
+    text("Click or Press Enter To Start", width / 2, height / 2);
 }
 
 function showEndScreen() {
@@ -123,7 +134,8 @@ function showEndScreen() {
     textAlign(CENTER, CENTER);
     text("Game Over!", width / 2, height / 2);
     text("Score: " + Score, width / 2, height / 2 + 50);
-    restartButton.show();
+    textSize(25);
+    text("Press 'R' to Restart", width / 2, height / 2 + 100);
 
     bat.visible = false;
     wallLH.visible = false;
@@ -139,7 +151,7 @@ function showEndScreen() {
         image(
             imgFace,
             200 + (i % 10) * 60,
-            height / 2 + 100 + floor(i / 10) * 60,
+            height / 2 + 150 + floor(i / 10) * 60,
             50, 50
         );
     }
@@ -149,7 +161,7 @@ function restartGame() {
     gameState = "start";
     Score = 0;
     timer = 10;
-    restartButton.hide();
+    frameCount = 0;
     if (currentBall) {
         currentBall.remove();
     }
