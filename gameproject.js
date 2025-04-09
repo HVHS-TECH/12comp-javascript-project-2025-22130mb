@@ -64,7 +64,7 @@ function mousePressed() {
     }
 }
 
-// 🔄 Restart with "r" key support
+ 
 function keyPressed() {
     checkKey(key);
 }
@@ -136,7 +136,7 @@ function showEndScreen() {
     text("Score: " + Score, width / 2, height / 2 + 50);
     textSize(25);
     text("Press 'R' to Restart", width / 2, height / 2 + 100);
-
+    imgHammer.visible = false;
     bat.visible = false;
     wallLH.visible = false;
     wallRH.visible = false;
