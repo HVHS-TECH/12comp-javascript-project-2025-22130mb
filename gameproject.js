@@ -15,7 +15,7 @@ function preload() {
     imgFace = loadImage('images/pixil-frame-0.png');
     imgHammer = loadImage('images/hammer.png');
     Background = loadImage('images/background.png');
-}
+} //loads all images in
 
 function setup() {
     createCanvas(1000, 1000);
@@ -30,7 +30,7 @@ function setup() {
     wallRH = new Sprite(1000, 500, 15, 1000, 'k');
     wallTop = new Sprite(500, 0, 1000, 15, 'k');
     wallBot = new Sprite(500, 1000, 1000, 15, 'k');
-
+    //spawns walls
     wallLH.color = wallRH.color = wallTop.color = wallBot.color = 'white';
     wallLH.visible = wallRH.visible = wallTop.visible = wallBot.visible = false;
 }
@@ -40,7 +40,7 @@ function draw() {
         showStartScreen();
     } else if (gameState === "playing") {
         background(Background);
-
+        
         bat.visible = true;
         wallLH.visible = true;
         wallRH.visible = true;
@@ -61,7 +61,7 @@ function mousePressed() {
     if (gameState === "start") {
         gameState = "playing";
         createBall();
-    }
+    } //create ball if game state = playing
 }
 
  
@@ -80,7 +80,7 @@ function checkKey(_keyPressed) {
         console.log("Game Restarted!");
         restartGame();
     }
-}
+} // if r key is pressed it will check the gamestate and change it from the start screen to playing state
 
 function displayTimer() {
     textSize(100);
@@ -90,34 +90,34 @@ function displayTimer() {
 
     if (frameCount % 60 == 0 && timer > 0) {
         timer--;
-    }
+    } //timer is at 60 frames per second so it changes by 1 second every 60 seconds
 
     if (timer <= 0) {
         gameState = "end";
     }
-}
+} //if timer=0 then gamestate = end
 
 function score() {
     textSize(35);
     fill('Black');
     text("Score: " + Score, 80, 50);
-}
+} //makes text with score show up
 
 function createBall() {
     if (currentBall) {
         currentBall.remove();
-    }
+    } //this makes it so that once a mole get hit it dissapears
 
     currentBall = new Sprite(random(100, 900), random(100, 900), 50, 50, 'k');
     currentBall.img = imgFace;
     currentBall.scale = 0.5;
-
+// this spawns a new mole in a random spot
     currentBall.collides(bat, function (ball, bat) {
         ball.remove();
         Score++;
         createBall();
     });
-}
+} //Adds 1 score each time a ball is removed
 
 function showStartScreen() {
     background(0);
@@ -125,7 +125,7 @@ function showStartScreen() {
     fill('white');
     textAlign(CENTER, CENTER);
     text("Click or Press Enter To Start", width / 2, height / 2);
-}
+} // 
 
 function showEndScreen() {
     background(0);
