@@ -55,7 +55,7 @@ function draw() {
     } else if (gameState === "end") {
         showEndScreen();
     }
-}
+} //this block of code just gets the game started once the game state is changed to playing. it makes all walls appear and makes the score and timer show up
 
 function mousePressed() {
     if (gameState === "start") {
@@ -142,7 +142,7 @@ function showEndScreen() {
     wallRH.visible = false;
     wallTop.visible = false;
     wallBot.visible = false;
-
+//this is the end screen and it hides everything on the screen that would be showing up on the game state "playing"
     if (currentBall) {
         currentBall.remove();
     }
